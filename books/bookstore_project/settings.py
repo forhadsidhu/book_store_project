@@ -78,6 +78,8 @@ WSGI_APPLICATION = 'bookstore_project.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 
+LOGIN_REDIRECT_URL = 'home' # redirecting in home page after login
+LOGOUT_REDIRECT_URL = 'home'
 
 DATABASES = {
     'default': {
