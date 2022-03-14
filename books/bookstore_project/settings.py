@@ -35,14 +35,54 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    # Third-party
+    'crispy_forms',  # for bootstrap
+
+    'allauth',  # new
+    'allauth.account',  # new
+    "allauth.socialaccount", #for social accounts
+
+     # social providers
+    "allauth.socialaccount.providers.github", # for github login
+    "allauth.socialaccount.providers.twitter", # new
 
     # Local
-    'users', # new
+    'users',  # new
     'pages',
 
 ]
 
-AUTH_USER_MODEL = 'users.CustomUser' # new
+# django-allauth config
+SITE_ID = 1
+ACCOUNT_SESSION_REMEMBER = True  # remember login session when use remember me
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False #keep one password field in signup
+
+
+# Only Email Name authentication
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # Django attempt to authenticate a user
+    'allauth.account.auth_backends.AuthenticationBackend',  # new
+)
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# add {{ form|crispy }} to replace {{ form.as_p}} for displaying form fields
+
+
+AUTH_USER_MODEL = 'users.CustomUser'  # new
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,8 +118,8 @@ WSGI_APPLICATION = 'bookstore_project.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 
-LOGIN_REDIRECT_URL = 'home' # redirecting in home page after login
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'home'  # redirecting in home page after login
+ACCOUNT_LOGOUT_REDIRECT = 'home'
 
 DATABASES = {
     'default': {
@@ -91,10 +131,6 @@ DATABASES = {
         'PORT': 5432
     }
 }
-
-
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -131,3 +167,39 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]  # can add multiple folder ,this it top level static folder
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # This is the location of static files in production level
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+
+'''
+The FileSystemFinder looks within the STATICFILES_DIRS setting, which we set to
+static, for any static files. Then the AppDirectoriesFinder looks for any directories
+named static located within an app, as opposed to located at a project-level static
+directory. This setting is read top-to-bottom meaning if a file called static/img.jpg
+is first found by FileSystemFinder it will be in place of an img.jpg file located within,
+say, the pages app at pages/static/img.jpg
+   structure like:
+       project_name
+        - deploy
+        - app_name
+          - migrations
+          ...
+          - static
+            - app_name
+              - css
+              - fonts
+              - img
+              - js
+              - tinymce
+          - templates
+            - app_name
+              - item.html
+              - list.html
+        - project_name
+        - __init__.py
+        - manage.py
+'''

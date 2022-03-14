@@ -11,3 +11,6 @@ docker-compose exec web python manage.py startapp users
 docker-compose exec web python manage.py makemigrations users
 
 create a user in pagadmin
+
+ docker-compose exec web python manage.py collectstatic
+ for production
