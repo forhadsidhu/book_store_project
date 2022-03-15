@@ -26,6 +26,8 @@ DEBUG =  int(os.environ.get('DEBUG',default=0))
 
 ALLOWED_HOSTS = []
 
+DEFAULT_FROM_EMAIL = 'admin@bookstore.com'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -73,7 +75,8 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',  # new
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# For Transactional email and marketting
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 
