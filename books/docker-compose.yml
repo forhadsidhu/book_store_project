@@ -7,6 +7,8 @@ services:
     command: python /code/manage.py runserver 0.0.0.0:8000
     environment:
       - SECRET_KEY=ip_@=tk@6%j_evdk%mc-(k9@x=9f!grghi)$$)&)@i%*_5+ob+
+      - STRIPE_TEST_PUBLISHABLE_KEY=<key>
+      - STRIPE_TEST_SECRET_KEY=<key>
       - DEBUG=1
     tty: true
     volumes:

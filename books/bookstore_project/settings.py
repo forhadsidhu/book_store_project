@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'books',
     'users',  # new
     'pages',
+    'orders',
 
 ]
 
@@ -153,6 +154,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+#stripe
+STRIPE_TEST_PUBLISHABLE_KEY=os.environ.get('STRIPE_TEST_PUBLISHABLE_KEY')
+STRIPE_TEST_SECRET_KEY=os.environ.get('STRIPE_TEST_SECRET_KEY')
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

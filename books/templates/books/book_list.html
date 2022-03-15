@@ -7,7 +7,7 @@
 
 
 {% block content %}
-
+   <a href="{% url 'orders' %}" class="btn btn-success" >Purchase All Books</a>
    {% for book in book_list %}
      <div>
          <h2><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h2>
