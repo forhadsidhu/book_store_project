@@ -30,5 +30,6 @@ class BookTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(no_resonse.status_code, 400)
         self.assertNotContains(response, 'Oka book')
+        self.assertContains(response,'I enjoed')
         self.assertTemplateUsed(response, 'books/book_list.html')
 
