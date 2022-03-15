@@ -14,3 +14,6 @@ create a user in pagadmin
 
  docker-compose exec web python manage.py collectstatic
  for production
+ 
+ docker-compose exec web rm -r books/migrations
+ docker volume ls

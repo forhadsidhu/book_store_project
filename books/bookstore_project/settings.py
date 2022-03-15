@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.twitter", # new
 
     # Local
+    'books',
     'users',  # new
     'pages',
 
