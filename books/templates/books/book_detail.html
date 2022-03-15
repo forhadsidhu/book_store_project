@@ -9,6 +9,7 @@
 {% block content %}
 
    <div class="book-detail">
+       <img class="bookcover" src="{{ book.cover.url}}" alt="{{ book.title }}">
        <h2><a href="">{{book.title}}</a></h2>
        <p>Author: {{book.author}}</p>
        <p>Price: {{book.price}}</p>
@@ -27,3 +28,5 @@
 {% endblock content %}
 
 
+<!--TODO:-->
+<!--   Keep media file in CDN(content delivery network) for secuirty and faster use-->

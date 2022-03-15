@@ -179,6 +179,11 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
+MEDIA_URL = '/media/' # for user input media file
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # for using in templates
+
+
+
 '''
 The FileSystemFinder looks within the STATICFILES_DIRS setting, which we set to
 static, for any static files. Then the AppDirectoriesFinder looks for any directories
