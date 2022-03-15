@@ -5,6 +5,9 @@ services:
   web:
     build: .
     command: python /code/manage.py runserver 0.0.0.0:8000
+    environment:
+      - SECRET_KEY=ip_@=tk@6%j_evdk%mc-(k9@x=9f!grghi)$$)&)@i%*_5+ob+
+      - DEBUG=1
     tty: true
     volumes:
       - .:/code
@@ -12,8 +15,6 @@ services:
       - 8000:8000
     depends_on:
       - db
-    environment:
-      - DEBUG=1
   db:
     image: postgres:11
     volumes:
