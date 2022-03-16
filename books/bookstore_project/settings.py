@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =  int(os.environ.get('DEBUG',default=0))
+DEBUG = int(os.environ.get('DEBUG', default=0))
 
 ALLOWED_HOSTS = []
 
@@ -44,33 +44,30 @@ INSTALLED_APPS = [
 
     'allauth',  # new
     'allauth.account',  # new
-    "allauth.socialaccount", #for social accounts
+    "allauth.socialaccount",  # for social accounts
 
-     # social providers
-    "allauth.socialaccount.providers.github", # for github login
-    "allauth.socialaccount.providers.twitter", # new
+    # social providers
+    "allauth.socialaccount.providers.github",  # for github login
+    "allauth.socialaccount.providers.twitter",  # new
 
     # Local
     'books',
     'users',  # new
     'pages',
     'orders',
-
+    'debug_toolbar',
 ]
 
 # django-allauth config
 SITE_ID = 1
 ACCOUNT_SESSION_REMEMBER = True  # remember login session when use remember me
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False #keep one password field in signup
-
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False  # keep one password field in signup
 
 # Only Email Name authentication
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
-
-
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # Django attempt to authenticate a user
@@ -80,9 +77,6 @@ AUTHENTICATION_BACKENDS = (
 # For Transactional email and marketting
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-
-
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # add {{ form|crispy }} to replace {{ form.as_p}} for displaying form fields
 
@@ -90,6 +84,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 AUTH_USER_MODEL = 'users.CustomUser'  # new
 
 MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware',  # for caching
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -97,7 +92,20 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'debug_toolbar.middleware.DebugToolbarMiddleware',  # for debug tool
+    'django.middleware.cache.FetchFromCacheMiddleware',  # for caching
 ]
+
+CACHE_MIDDLEWARE_ALIAS = 'default'
+CACHE_MIDDLEWARE_SECONDS = 604800  # for 1 week cahce
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
+
+# django-debug-toolbar macting internal ip with docker host
+import socket
+
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
 
 ROOT_URLCONF = 'bookstore_project.urls'
 
@@ -155,11 +163,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#stripe
-STRIPE_TEST_PUBLISHABLE_KEY=os.environ.get('STRIPE_TEST_PUBLISHABLE_KEY')
-STRIPE_TEST_SECRET_KEY=os.environ.get('STRIPE_TEST_SECRET_KEY')
-
-
+# stripe
+STRIPE_TEST_PUBLISHABLE_KEY = os.environ.get('STRIPE_TEST_PUBLISHABLE_KEY')
+STRIPE_TEST_SECRET_KEY = os.environ.get('STRIPE_TEST_SECRET_KEY')
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -186,10 +192,8 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
 
-MEDIA_URL = '/media/' # for user input media file
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # for using in templates
-
-
+MEDIA_URL = '/media/'  # for user input media file
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # for using in templates
 
 '''
 The FileSystemFinder looks within the STATICFILES_DIRS setting, which we set to

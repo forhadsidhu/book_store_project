@@ -12,6 +12,7 @@ class Book(models.Model):
 
     id = models.UUIDField(
         primary_key=True,
+        db_index=True, #db performance indexing
         default=uuid.uuid4,
         editable=False
     )
@@ -24,6 +25,9 @@ class Book(models.Model):
 
     # Setting Custom permission
     class Meta:
+        indexes =[
+            models.Index(fields=['id'],name='id_index'),
+        ]
         permissions=[
             ('special_status','Can read all books'),
         ]
