@@ -7,7 +7,7 @@ services:
     command: python /code/manage.py runserver 0.0.0.0:8000
     environment:
       - ENVIRONMENT=development
-      - SECRET_KEY=ip_@=tk@6%j_evdk%mc-(k9@x=9f!grghi)$$)&)@i%*_5+ob+
+      - SECRET_KEY=key
       - STRIPE_TEST_PUBLISHABLE_KEY=<key>
       - STRIPE_TEST_SECRET_KEY=<key>
       - DEBUG=1
